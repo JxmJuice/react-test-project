@@ -1,0 +1,79 @@
+body{
+    --base-color:#1D1F22;
+}
+
+.Header {
+  height: 80px;
+  background-color: #ffffff;
+  &__wrapper {
+    max-width: 1240px;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__nav {
+    width: 235px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__link {
+    position: relative;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 16px Raleway;
+    color: var(--base-color);
+    text-decoration: none;
+    &_tech {
+      width: 69px;
+    }
+    &_clothes {
+      width: 97px;
+    }
+    &_all {
+      width: 69px;
+    }
+    &:after {
+      background: none repeat scroll 0 0 transparent;
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      background: #5ece7b;
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+    }
+    &_active,
+    &:hover {
+      color: #5ece7b;
+      &:after {
+        width: 100%;
+        left: 0;
+      }
+    }
+  }
+  &__shop-info {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    &_currency {
+      width: 100px;
+      margin-right: 10px;
+    }
+  }
+}
+.currency_dropdown {
+  &_active {
+    transform: rotate(180deg);
+  }
+}

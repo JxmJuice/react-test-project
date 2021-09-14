@@ -1,0 +1,210 @@
+.CartPopUp {
+  position: relative;
+  height: 80px;
+  width: 20px;
+  & label {
+    width: 0;
+    height: 0;
+  }
+  &__plug {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    z-index: 50;
+    width: 100%;
+    height: 2000px;
+    background: rgba(57, 55, 72, 0.22);
+  }
+  &__image {
+    width: 20px;
+    height: 20px;
+    background-image: url(../../assets/images/cart.svg);
+    margin-top: 8px;
+    cursor: pointer;
+  }
+  &__total {
+    width: 280px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    &_title {
+      font: 16px Roboto;
+      font-weight: 500;
+      color: var(--base-color);
+    }
+    &_price {
+      font: 16px Raleway;
+      font-weight: 700;
+      color: var(--base-color);
+    }
+  }
+  &__btns {
+    width: 292px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    &_cart {
+      width: 140px;
+      height: 43px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--base-color);
+      background-color: white;
+      font: 14px Raleway;
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: var(--base-color);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+    &_checkout {
+      width: 140px;
+      height: 43px;
+      border: none;
+      background-color: #5ece7b;
+      font: 14px Raleway;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  &__amount {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--base-color);
+    font: 14px Roboto;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 50%;
+  }
+  &__wrapper {
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    right: 0px;
+    top: 80px;
+    width: 325px;
+    max-height: 540px;
+    box-sizing: border-box;
+    padding: 10px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+  }
+  &__products {
+    width: 293px;
+    max-height: 340px;
+    padding-right: 25px;
+    box-sizing: content-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  &__number {
+    font: 16px Raleway;
+    color: var(--base-color);
+    margin-bottom: 20px;
+  }
+  &__product {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 293px;
+    height: 137px;
+    margin-bottom: 40px;
+    &_info {
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      & .product {
+        &__brand {
+          font: 16px Raleway;
+          line-height: 26px;
+          font-weight: 300;
+          color: var(--base-color);
+        }
+        &__name {
+          font: 16px Raleway;
+          line-height: 26px;
+          font-weight: 300;
+          color: var(--base-color);
+          margin-bottom: 5px;
+        }
+        &__price {
+          font: 16px Raleway;
+          line-height: 26px;
+          font-weight: 500;
+          margin-bottom: 25px;
+          color: var(--base-color);
+        }
+        &__attributes {
+          display: flex;
+          flex-direction: row;
+          &_attr {
+            width: 40px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--base-color);
+            box-sizing: border-box;
+            font: 14px Source Sans Pro;
+            font-weight: 400;
+            color: var(--base-color);
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+.product {
+  &__amount {
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 15px;
+    &_btn {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--base-color);
+      font: 24px Raleway;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      &:hover{
+        background-color: var(--base-color);
+        color: white;
+      }
+    }
+  }
+  &__image {
+    width: 85px;
+    height: 85px;
+  }
+}
