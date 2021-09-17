@@ -59,6 +59,7 @@ class Header extends React.PureComponent {
     let amount = 0;
     tempCart.map((el) => {
       amount += el.amount;
+      return null;
     });
     this.setState({ amount: amount });
   };
@@ -72,15 +73,17 @@ class Header extends React.PureComponent {
         if (product.amount === 0) {
           this.setState({ amount: this.state.amount - 1 });
           tempCart.splice(index, 1);
-          return;
+          return null;
         }
-        return;
+        return null;
       }
       el.amount = temp;
+      return null;
     });
     let amount = 0;
     tempCart.map((el) => {
       amount += el.amount;
+      return null;
     });
     this.setState({ cart: tempCart, amount: amount });
   };

@@ -51,26 +51,24 @@ export default class CartProduct extends PureComponent<MyProps> {
   };
 
   renderAttributes = (attr: any, key: number) => {
-    {
-      if (attr.name === "Color") {
-        return (
-          <div className="product__attribute" key={key}>
-            <div className="product__attributes_name">{attr.name}</div>
-            <div
-              className="product__attributes_attr"
-              style={{ backgroundColor: attr.value }}
-              key={key}
-            ></div>
-          </div>
-        );
-      } else {
-        return (
-          <div className="product__attribute" key={key}>
-            <div className="product__attributes_name">{attr.name}</div>
-            <div className="product__attributes_attr">{attr.value}</div>
-          </div>
-        );
-      }
+    if (attr.name === "Color") {
+      return (
+        <div className="product__attribute" key={key}>
+          <div className="product__attributes_name">{attr.name}</div>
+          <div
+            className="product__attributes_attr"
+            style={{ backgroundColor: attr.value }}
+            key={key}
+          ></div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="product__attribute" key={key}>
+          <div className="product__attributes_name">{attr.name}</div>
+          <div className="product__attributes_attr">{attr.value}</div>
+        </div>
+      );
     }
   };
 
