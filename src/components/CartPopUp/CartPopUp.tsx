@@ -20,6 +20,18 @@ export default class CartPopUp extends PureComponent<MyProps> {
 
   componentDidMount() {
     this.handlePrice();
+
+    const popUp = document.querySelector(".CartPopUp");
+    const btn = document.querySelector(".CartPopUp__image");
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      const isPopUp = target === popUp || (popUp as HTMLElement).contains(target);
+      const isBtn = target === btn;
+      if (!isPopUp && !isBtn) {
+        this.setState({ isChecked: false });
+      }
+    });
   }
 
   handlePrice = () => {
@@ -27,9 +39,11 @@ export default class CartPopUp extends PureComponent<MyProps> {
     this.props.cart.map((product) => {
       product.prices.map((price) => {
         if (price.currency === this.props.currency.name) {
-          total += price.amount*product.amount;
+          total += price.amount * product.amount;
         }
+        return null;
       });
+      return null;
     });
     return total;
   };
@@ -52,10 +66,10 @@ export default class CartPopUp extends PureComponent<MyProps> {
     }
   };
 
-  render() {
+  preRender = () => {
     let amountComponent = null;
     let itemString = "item";
-    if (this.props.amount != 1) {
+    if (this.props.amount !== 1) {
       itemString += "s";
     }
     if (this.props.amount !== 0) {
@@ -67,7 +81,7 @@ export default class CartPopUp extends PureComponent<MyProps> {
     }
     let popUp = null;
     let plug = null;
-    if (this.state.isChecked == true) {
+    if (this.state.isChecked === true) {
       document.body.style.overflowY = "hidden";
       plug = <div className="CartPopUp__plug" onClick={this.handlePopUp}></div>;
       popUp = (
@@ -91,7 +105,10 @@ export default class CartPopUp extends PureComponent<MyProps> {
             </div>
             <div className="CartPopUp__total">
               <div className="CartPopUp__total_title">Total</div>
-              <div className="CartPopUp__total_price">{this.props.currency.icon}{this.state.total}</div>
+              <div className="CartPopUp__total_price">
+                {this.props.currency.icon}
+                {this.state.total}
+              </div>
             </div>
             <div className="CartPopUp__btns">
               <Link
@@ -116,6 +133,11 @@ export default class CartPopUp extends PureComponent<MyProps> {
       popUp = null;
       plug = null;
     }
+    return { plug: plug, amountComponent: amountComponent, popUp: popUp };
+  };
+
+  render() {
+    const { plug, amountComponent, popUp } = this.preRender();
     return (
       <>
         {plug}

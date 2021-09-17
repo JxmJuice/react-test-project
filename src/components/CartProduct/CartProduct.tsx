@@ -11,13 +11,12 @@ interface MyProps {
 export default class CartProduct extends PureComponent<MyProps> {
   state = {
     amount: this.props.product.amount,
-    price:0
+    price: 0,
   };
 
   handleInc = () => {
     let product = this.props.product;
     product.amount = this.state.amount + 1;
-    console.log(product.amount);
     this.setState({ amount: product.amount });
     this.props.handleAmount(product);
     this.props.updateTotal(+product.prices[0].amount.toFixed(2));
@@ -26,7 +25,6 @@ export default class CartProduct extends PureComponent<MyProps> {
   handleDec = () => {
     let product = this.props.product;
     product.amount = this.state.amount - 1;
-    console.log(product.amount);
     this.setState({ amount: product.amount });
     this.props.handleAmount(product);
     this.props.updateTotal(-product.prices[0].amount.toFixed(2));
@@ -34,21 +32,46 @@ export default class CartProduct extends PureComponent<MyProps> {
     }
   };
 
-  componentDidMount(){
-      this.handlePrice();
+  componentDidMount() {
+    this.handlePrice();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.handlePrice();
     this.setState({ amount: this.props.product.amount });
-}
+  }
 
   handlePrice = () => {
     this.props.product.prices.map((price) => {
       if (price.currency === this.props.currency.name) {
         this.setState({ price: price.amount });
       }
+      return null;
     });
+  };
+
+  renderAttributes = (attr: any, key: number) => {
+    {
+      if (attr.name === "Color") {
+        return (
+          <div className="product__attribute" key={key}>
+            <div className="product__attributes_name">{attr.name}</div>
+            <div
+              className="product__attributes_attr"
+              style={{ backgroundColor: attr.value }}
+              key={key}
+            ></div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="product__attribute" key={key}>
+            <div className="product__attributes_name">{attr.name}</div>
+            <div className="product__attributes_attr">{attr.value}</div>
+          </div>
+        );
+      }
+    }
   };
 
   render() {
@@ -64,27 +87,13 @@ export default class CartProduct extends PureComponent<MyProps> {
           <div className="product__brand">{this.props.product.brand}</div>
           <div className="product__name">{this.props.product.name}</div>
           <div className="product__price">
-            {this.props.currency.icon}{this.state.price}
+            {this.props.currency.icon}
+            {this.state.price}
           </div>
           <div className="product__attributes">
-            {this.props.product.cartAttributes.map((attr, key) => {
-              console.log(attr.name);
-              if (attr.name === "Color") {
-                return (
-                  <div
-                    className="product__attributes_attr"
-                    style={{ backgroundColor: attr.value }}
-                    key={key}
-                  ></div>
-                );
-              } else {
-                return (
-                  <div className="product__attributes_attr" key={key}>
-                    {attr.value}
-                  </div>
-                );
-              }
-            })}
+            {this.props.product.cartAttributes.map((attr, index) =>
+              this.renderAttributes(attr, index)
+            )}
           </div>
         </div>
         <div className="product__amount">

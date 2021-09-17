@@ -1,29 +1,38 @@
 import { PureComponent } from "react";
-import { Route } from "react-router";
-import { product } from "../../constants";
+import { cartProduct, product } from "../../constants";
 import ProductCard from "../ProductCard/ProductCard";
-import ProductPage from "../ProductPage/ProductPage";
 import "./Shop.scss";
 
 interface MyProps {
   category: string;
   currency:{ icon: string, name: string }
+  addToCart:(product:cartProduct)=>void
 }
 
 var query = `query GetCategory($input: CategoryInput) {
     category(input:$input) {
         products {
-            id,
-            name,
-            inStock,
-            gallery,
-            description,
-            category,
-            prices{
-                currency
-                amount
-            },
-            brand
+          id,
+          name,
+          inStock,
+          gallery,
+          description,
+          category,
+          attributes{
+              id,
+              name,
+              type,
+              items {
+                  displayValue,
+                  value,
+                  id
+              }
+          },
+          prices{
+              currency
+              amount
+          },
+          brand
         }
     }
   }`;
@@ -89,7 +98,7 @@ export default class Shop extends PureComponent<MyProps> {
           <h2 className="Shop__category">{this.state.title}</h2>
           <div className="Shop__products">
             {this.state.products.map((el: product, index) => {
-              return <ProductCard key={index} product={el} currency={this.props.currency}/>;
+              return <ProductCard key={index} product={el} currency={this.props.currency} addToCart={this.props.addToCart}/>;
             })}
           </div>
         </div>

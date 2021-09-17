@@ -5,9 +5,13 @@ const query = `query GetCurrencies {
     currencies
   }`;
 
-  interface MyProps {
-      handleCurrency:(currency: string)=>void
-  }
+const TOP = -300;
+
+const BOTTOM = 10;
+
+interface MyProps {
+  handleCurrency: (currency: string) => void;
+}
 
 export default class Select extends PureComponent<MyProps> {
   state = {
@@ -52,13 +56,31 @@ export default class Select extends PureComponent<MyProps> {
             default:
               break;
           }
+          return null;
         });
         this.setState({ currencies: result });
       });
+    
+    const menu = document.querySelector(".Select__list");
+    const btn = document.querySelector(".Select__button");
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      const isMenu = target === menu || (menu as HTMLElement).contains(target);
+      const isBtn = target === btn;
+      if (!isMenu && !isBtn) {
+        console.log(1);
+        this.setState({ isChecked: true });
+      }
+    });
   }
 
   handleClick = () => {
-    this.setState({ isChecked: !this.state.isChecked });
+    if (this.state.isChecked === true) {
+      this.setState({ isChecked: false });
+    } else {
+      this.setState({ isChecked: true });
+    }
   };
 
   handleCurrency = (event: any) => {
@@ -93,9 +115,9 @@ export default class Select extends PureComponent<MyProps> {
   render() {
     let translate;
     if (this.state.isChecked === true) {
-      translate = -300;
+      translate = TOP;
     } else {
-      translate = 10;
+      translate = BOTTOM;
     }
     return (
       <div className="Select">
@@ -106,9 +128,9 @@ export default class Select extends PureComponent<MyProps> {
           className="Select__list"
           style={{ transform: `translateY(${translate}px)` }}
         >
-          {this.state.currencies.map((el) => {
+          {this.state.currencies.map((el, index) => {
             return (
-              <li>
+              <li key={index}>
                 <button
                   className="Select__currency"
                   onClick={this.handleCurrency}

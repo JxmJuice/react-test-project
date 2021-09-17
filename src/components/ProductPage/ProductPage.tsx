@@ -4,6 +4,36 @@ import parse from "html-react-parser";
 import "./ProductPage.scss";
 import { RouteComponentProps, withRouter } from "react-router";
 
+const DEFAULTPRODUCT = {
+  name: "",
+  id: "",
+  inStock: false,
+  gallery: [""],
+  description: "",
+  category: "",
+  attributes: [
+    {
+      name: "",
+      id: "",
+      type: "",
+      items: [
+        {
+          displayValue: "",
+          value: "",
+          id: "",
+        },
+      ],
+    },
+  ],
+  prices: [
+    {
+      currency: "",
+      amount: 0,
+    },
+  ],
+  brand: "",
+};
+
 interface MyProps {
   addToCart: (product: cartProduct) => void;
   currency: { icon: string; name: string };
@@ -41,35 +71,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
     selectedAttributes: [] as { name: string; value: string }[],
     amount: 0,
     id: this.props.location.pathname,
-    product: {
-      name: "",
-      id: "",
-      inStock: false,
-      gallery: [""],
-      description: "",
-      category: "",
-      attributes: [
-        {
-          name: "",
-          id: "",
-          type: "",
-          items: [
-            {
-              displayValue: "",
-              value: "",
-              id: "",
-            },
-          ],
-        },
-      ],
-      prices: [
-        {
-          currency: "",
-          amount: 0,
-        },
-      ],
-      brand: "",
-    } as product,
+    product: DEFAULTPRODUCT as product,
   };
 
   componentDidMount() {
@@ -86,6 +88,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
       if (price.currency === this.props.currency.name) {
         this.setState({ amount: price.amount });
       }
+      return null;
     });
   };
 
@@ -126,6 +129,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
     };
     this.state.selectedAttributes.map((attr) => {
       product.cartAttributes.push({ name: attr.name, value: attr.value });
+      return null;
     });
     if (
       product.cartAttributes.length !== this.state.product.attributes.length
@@ -164,7 +168,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
     }
   };
 
-  render() {
+  preRender = () => {
     let attributes = [] as any;
     if (this.state.product.attributes !== undefined) {
       this.state.product.attributes.map((attr, key) => {
@@ -228,8 +232,14 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
             </div>
           );
         }
+        return null;
       });
     }
+    return attributes;
+  };
+
+  render() {
+    const attributes = this.preRender(); 
     return (
       <div className="ProductPage">
         <div className="ProductPage__wrapper">
@@ -269,6 +279,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
             <button
               className="ProductPage__info_cart-btn"
               onClick={this.handleAddToCart}
+              disabled={!this.state.product.inStock}
             >
               add to cart
             </button>

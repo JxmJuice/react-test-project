@@ -2,42 +2,44 @@ import { PureComponent } from "react";
 import { cartProduct } from "../../constants";
 import "./Product.scss";
 
+const IMGSIZE = -141;
+
 interface MyProps {
   product: cartProduct;
   handleAmount: (product: cartProduct) => void;
   updateTotal: (number: number) => void;
   currency: { icon: string; name: string };
+  amount: number;
 }
 
 export default class CartProduct extends PureComponent<MyProps> {
   state = {
-    amount: this.props.product.amount,
+    amount: this.props.amount,
     counter: 0,
-    price:0
+    price: 0,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.handlePrice();
-}
+  }
 
-componentDidUpdate(){
-  this.handlePrice();
-  this.setState({ amount: this.props.product.amount });
-}
+  componentDidUpdate() {
+    this.handlePrice();
+    this.setState({ amount: this.props.product.amount });
+  }
 
-handlePrice = () => {
-  this.props.product.prices.map((price) => {
-    if (price.currency === this.props.currency.name) {
-      this.setState({ price: price.amount });
-    }
-  });
-};
-
+  handlePrice = () => {
+    this.props.product.prices.map((price) => {
+      if (price.currency === this.props.currency.name) {
+        this.setState({ price: price.amount });
+      }
+      return null;
+    });
+  };
 
   handleInc = () => {
     let product = this.props.product;
     product.amount = this.state.amount + 1;
-    console.log(product.amount);
     this.setState({ amount: product.amount });
     this.props.handleAmount(product);
     this.props.updateTotal(+product.prices[0].amount.toFixed(2));
@@ -46,7 +48,6 @@ handlePrice = () => {
   handleDec = () => {
     let product = this.props.product;
     product.amount = this.state.amount - 1;
-    console.log(product.amount);
     this.setState({ amount: product.amount });
     this.props.handleAmount(product);
     this.props.updateTotal(-product.prices[0].amount.toFixed(2));
@@ -62,7 +63,7 @@ handlePrice = () => {
     this.setState({ counter: this.state.counter + 1 });
   };
 
-  render() {
+  preRender = () => {
     let style = undefined;
     if (this.state.amount === 0) {
       style = { display: "none" };
@@ -81,33 +82,52 @@ handlePrice = () => {
     } else {
       leftDisabled = "";
     }
+    return {
+      style: style,
+      rightDisabled: rightDisabled,
+      leftDisabled: leftDisabled,
+    };
+  };
+
+  renderAttributes = (attr: any, key: number) => {
+    if (attr.name === "Color") {
+      return (
+        <div className="Product__attribute" key={key}>
+          <div className="Product__attributes_name">{attr.name}</div>
+          <div
+            className="Product__attributes_attr"
+            style={{ backgroundColor: attr.value }}
+            key={key}
+          ></div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="Product__attribute" key={key}>
+          <div className="Product__attributes_name">{attr.name}</div>
+          <div className="Product__attributes_attr" key={key}>
+            {attr.value}
+          </div>
+        </div>
+      );
+    }
+  };
+
+  render() {
+    const { style, rightDisabled, leftDisabled } = this.preRender();
     return (
       <div style={style} className="Product">
         <div className="Product__info">
           <div className="Product__info_brand">{this.props.product.brand}</div>
           <div className="Product__info_name">{this.props.product.name}</div>
           <div className="Product__info_price">
-            {this.props.currency.icon}{this.state.price}
+            {this.props.currency.icon}
+            {this.state.price}
           </div>
           <div className="Product__attributes">
-            {this.props.product.cartAttributes.map((attr, key) => {
-              console.log(attr.name);
-              if (attr.name === "Color") {
-                return (
-                  <div
-                    className="Product__attributes_attr"
-                    style={{ backgroundColor: attr.value }}
-                    key={key}
-                  ></div>
-                );
-              } else {
-                return (
-                  <div className="Product__attributes_attr" key={key}>
-                    {attr.value}
-                  </div>
-                );
-              }
-            })}
+            {this.props.product.cartAttributes.map((attr, key) =>
+              this.renderAttributes(attr, key)
+            )}
           </div>
         </div>
         <div className="Product__amount">
@@ -126,7 +146,9 @@ handlePrice = () => {
           >{`<`}</button>
           <div
             className="Product__images_wrapper"
-            style={{ transform: `translateX(${-141 * this.state.counter}px)` }}
+            style={{
+              transform: `translateX(${IMGSIZE * this.state.counter}px)`,
+            }}
           >
             {this.props.product.gallery.map((el) => {
               return (

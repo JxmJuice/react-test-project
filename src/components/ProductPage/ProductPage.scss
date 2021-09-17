@@ -17,6 +17,7 @@
     &_image {
       width: 80px;
       height: 80px;
+      object-fit: contain;
       margin-bottom: 20px;
       transition: all 0.35s cubic-bezier(0.075, 0.82, 0.165, 1);
       &:hover {
@@ -29,6 +30,7 @@
   &__main-image {
     width: 610px;
     height: 510px;
+    object-fit: contain;
   }
   &__info {
     width: 293px;
@@ -63,13 +65,14 @@
         }
         &__picker {
           width: 292px;
-          height: 35px;
+          min-height: 35px;
+          height: 100%;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
           align-items: center;
           justify-content: flex-start;
-          margin-bottom: 100px;
+          margin-bottom: 20px;
           &_btn {
             width: 60px;
             height: 35px;
@@ -131,6 +134,13 @@
       &:hover {
         cursor: pointer;
         transform: scale(1.05);
+      }
+      &:disabled {
+        background-color: gray;
+        &:hover {
+          cursor: auto;
+          transform: none;
+        }
       }
     }
     &_description {

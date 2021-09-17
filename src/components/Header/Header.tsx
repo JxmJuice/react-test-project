@@ -16,7 +16,6 @@ class Header extends React.PureComponent {
     currency: { icon: "$", name: "USD" },
   };
   handleCurrency = (currency: string) => {
-    console.log("cur", currency);
     switch (currency) {
       case "$ USD":
         this.setState({ currency: { icon: "$", name: "USD" } });
@@ -48,34 +47,42 @@ class Header extends React.PureComponent {
         tempAmount++;
         el.amount = tempAmount;
         isChanged = true;
-        return;
+        return null;
       }
       el.amount = tempAmount;
+      return null;
     });
     if (isChanged === false) {
       tempCart.push(product);
-      this.setState({ cart: tempCart, amount: tempCart.length });
-      console.log(tempCart, this.state.cart);
+      this.setState({ cart: tempCart});
     }
+    let amount = 0;
+    tempCart.map((el) => {
+      amount += el.amount;
+    });
+    this.setState({ amount: amount });
   };
 
   handleAmount = (product: cartProduct) => {
     const tempCart = this.state.cart;
-    let index;
     tempCart.map((el, index) => {
       let temp = el.amount;
       el.amount = product.amount;
       if (isEqual(product, el)) {
         if (product.amount === 0) {
           this.setState({ amount: this.state.amount - 1 });
-          tempCart.splice(index,1);
+          tempCart.splice(index, 1);
           return;
         }
         return;
       }
       el.amount = temp;
     });
-    this.setState({ cart: tempCart });
+    let amount = 0;
+    tempCart.map((el) => {
+      amount += el.amount;
+    });
+    this.setState({ cart: tempCart, amount: amount });
   };
 
   handleCheckout = () => {
@@ -128,13 +135,13 @@ class Header extends React.PureComponent {
         </header>
         <Switch>
           <Route path="/tech">
-            <Shop category="tech" currency={this.state.currency} />
+            <Shop category="tech" currency={this.state.currency} addToCart={this.addToCart}/>
           </Route>
           <Route path="/clothes">
-            <Shop category="clothes" currency={this.state.currency} />
+            <Shop category="clothes" currency={this.state.currency} addToCart={this.addToCart} />
           </Route>
           <Route path="/all">
-            <Shop category="" currency={this.state.currency} />
+            <Shop category="" currency={this.state.currency} addToCart={this.addToCart}/>
           </Route>
           <Route path="/cart">
             <Cart
@@ -142,6 +149,7 @@ class Header extends React.PureComponent {
               handleAmount={this.handleAmount}
               handleCheckout={this.handleCheckout}
               currency={this.state.currency}
+              amount={this.state.amount}
             />
           </Route>
           <Route path="/:id">

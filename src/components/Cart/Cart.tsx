@@ -5,6 +5,7 @@ import "./Cart.scss";
 
 interface MyProps {
   cart: cartProduct[];
+  amount: number;
   handleAmount: (product: cartProduct) => void;
   handleCheckout: () => void;
   currency: { icon: string; name: string };
@@ -12,6 +13,7 @@ interface MyProps {
 
 export default class Cart extends PureComponent<MyProps> {
   componentDidUpdate() {
+    console.log('updated')
     const total = this.handlePrice();
     this.setState({ total: +total.toFixed(2) });
   }
@@ -23,6 +25,7 @@ export default class Cart extends PureComponent<MyProps> {
 
   state = {
     total: 0,
+    cart: this.props.cart
   };
 
   handlePrice = () => {
@@ -32,7 +35,9 @@ export default class Cart extends PureComponent<MyProps> {
         if (price.currency === this.props.currency.name) {
           total += price.amount * product.amount;
         }
+        return null;
       });
+      return null;
     });
     return total;
   };
@@ -47,7 +52,7 @@ export default class Cart extends PureComponent<MyProps> {
       <div className="Cart__wrapper">
         <div className="Cart__title">Cart</div>
         <div className="Cart__products">
-          {this.props.cart.map((el, index) => {
+          {this.state.cart.map((el, index) => {
             return (
               <Product
                 product={el}
@@ -55,6 +60,7 @@ export default class Cart extends PureComponent<MyProps> {
                 handleAmount={this.props.handleAmount}
                 updateTotal={this.updateTotal}
                 currency={this.props.currency}
+                amount={el.amount}
               />
             );
           })}

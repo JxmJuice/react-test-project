@@ -154,12 +154,23 @@
           font: 16px Raleway;
           line-height: 26px;
           font-weight: 500;
-          margin-bottom: 25px;
           color: var(--base-color);
+        }
+        &__attribute {
+          height: 50px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: flex-start;
         }
         &__attributes {
           display: flex;
           flex-direction: row;
+          &_name {
+            font: 10px Raleway;
+            line-height: 10px;
+            margin-bottom: 2px;
+          }
           &_attr {
             width: 40px;
             height: 24px;
@@ -204,7 +215,8 @@
     }
   }
   &__image {
-    width: 85px;
-    height: 85px;
+    width: 105px;
+    height: 117px;
+    object-fit: contain;
   }
 }
