@@ -73,14 +73,14 @@ export default class CartProduct extends PureComponent<MyProps> {
   };
 
   render() {
-    let style = undefined;
+    let currentState = '';
     if (this.state.amount === 0) {
-      style = { display: "none" };
+      currentState = "hidden";
     } else {
-      style = undefined;
+      currentState = '';
     }
     return (
-      <div style={style} className="CartPopUp__product">
+      <div className={`CartPopUp__product ${currentState}`}>
         <div className="CartPopUp__product_info">
           <div className="product__brand">{this.props.product.brand}</div>
           <div className="product__name">{this.props.product.name}</div>

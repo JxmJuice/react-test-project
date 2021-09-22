@@ -63,6 +63,11 @@
           font-weight: 700;
           color: var(--base-color);
         }
+        &__checkbox {
+          width: 0;
+          height: 1px;
+          margin: -1px;
+        }
         &__picker {
           width: 292px;
           min-height: 35px;

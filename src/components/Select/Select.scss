@@ -1,4 +1,9 @@
 .Select {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   position: relative;
   display: flex;
   max-height: 82px;
@@ -32,10 +37,4 @@
       transform: scale(1.1);
     }
   }
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }

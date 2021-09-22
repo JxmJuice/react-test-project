@@ -64,11 +64,11 @@ export default class CartProduct extends PureComponent<MyProps> {
   };
 
   preRender = () => {
-    let style = undefined;
+    let currentState = '';
     if (this.state.amount === 0) {
-      style = { display: "none" };
+      currentState = "hidden";
     } else {
-      style = undefined;
+      currentState = '';
     }
     let rightDisabled = "";
     let leftDisabled = "btn_disabled";
@@ -83,7 +83,7 @@ export default class CartProduct extends PureComponent<MyProps> {
       leftDisabled = "";
     }
     return {
-      style: style,
+      currentState: currentState,
       rightDisabled: rightDisabled,
       leftDisabled: leftDisabled,
     };
@@ -114,9 +114,9 @@ export default class CartProduct extends PureComponent<MyProps> {
   };
 
   render() {
-    const { style, rightDisabled, leftDisabled } = this.preRender();
+    const { currentState, rightDisabled, leftDisabled } = this.preRender();
     return (
-      <div style={style} className="Product">
+      <div className={`Product ${currentState}`}>
         <div className="Product__info">
           <div className="Product__info_brand">{this.props.product.brand}</div>
           <div className="Product__info_name">{this.props.product.name}</div>

@@ -1,4 +1,7 @@
 .Product {
+  &.hidden{
+    display: none;
+  }
   width: 1100px;
   margin: 0 auto 20px;
   box-sizing: border-box;

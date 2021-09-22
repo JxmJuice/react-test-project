@@ -184,11 +184,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
                         <input
                           type="checkbox"
                           onChange={this.handleChange}
-                          style={{
-                            width: "0",
-                            height: "1px",
-                            margin: "-1px",
-                          }}
+                          className='attribute__checkbox'
                         />
                         <div
                           className="attribute__picker_btn"
@@ -213,11 +209,7 @@ class ProductPage extends PureComponent<MyProps & RouteComponentProps> {
                       <input
                         type="checkbox"
                         onChange={this.handleChange}
-                        style={{
-                          width: "0",
-                          height: "1px",
-                          margin: "-1px",
-                        }}
+                        className='attribute__checkbox'
                       />
                       <div
                         className="attribute__picker_btn"

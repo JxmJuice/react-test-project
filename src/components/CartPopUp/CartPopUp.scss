@@ -6,6 +6,11 @@
     width: 0;
     height: 0;
   }
+  &__checkbox {
+    width: 0;
+    height: 1px;
+    margin: -1px;
+  }
   &__plug {
     position: absolute;
     left: 0;
@@ -125,6 +130,9 @@
     margin-bottom: 20px;
   }
   &__product {
+    &.hidden {
+      display: none;
+    }
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -208,7 +216,7 @@
       background-color: white;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      &:hover{
+      &:hover {
         background-color: var(--base-color);
         color: white;
       }

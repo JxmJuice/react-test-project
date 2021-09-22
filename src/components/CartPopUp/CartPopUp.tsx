@@ -145,7 +145,7 @@ export default class CartPopUp extends PureComponent<MyProps> {
           <label>
             <input
               type="checkbox"
-              style={{ width: "0", height: "1px", margin: "-1px" }}
+              className='CartPopUp__checkbox'
               onChange={this.handlePopUp}
             ></input>
             {amountComponent}
